@@ -2,6 +2,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProductById, addToCart } from "../services/api";
+import { useCart } from "../hooks/useCart";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -9,6 +10,7 @@ export default function ProductDetailPage() {
   const [colorCode, setColorCode] = useState("");
   const [storageCode, setStorageCode] = useState("");
   const [loading, setLoading] = useState(true);
+  const { cartCount, setCartCount } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -22,9 +24,11 @@ export default function ProductDetailPage() {
   }, [id]);
 
   const handleAddToCart = async () => {
-    const result = await addToCart({ id, colorCode, storageCode });
-    alert(`Producto añadido al carrito. Total en carrito: ${result.count}`);
-    // TODO: add context to handle the global count of elements
+    await addToCart({ id, colorCode, storageCode });
+
+    const newCount = cartCount + 1;
+    setCartCount(newCount);
+    alert(`Producto añadido al carrito. Total en carrito: ${newCount}`);
   };
 
   if (loading || !product) return <p>Cargando...</p>;
