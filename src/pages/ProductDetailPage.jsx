@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import ProductSpecs from "../components/ProductSpecs";
 import ProductSelectors from "../components/ProductSelectors";
 import BackLink from "../components/BackLink";
+import AddToCartButton from "../components/AddToCartButton";
 import { getProductById, addToCart } from "../services/api";
 import { useCart } from "../hooks/useCart";
 
@@ -64,12 +65,7 @@ export default function ProductDetailPage() {
             setStorageCode={setStorageCode}
           />
 
-          <button
-            onClick={handleAddToCart}
-            className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded transition"
-          >
-            Añadir al carrito
-          </button>
+          <AddToCartButton handleAddToCart={handleAddToCart} />
         </div>
       </div>
     </div>
