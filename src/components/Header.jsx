@@ -1,4 +1,4 @@
-// Header.jsx
+// src/components/Header.jsx
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { HomeIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";

@@ -1,4 +1,6 @@
 // src/components/ProductSelectors.jsx
+import SelectField from "./SelectField";
+
 export default function ProductSelectors({
   product,
   colorCode,
@@ -6,37 +8,24 @@ export default function ProductSelectors({
   setColorCode,
   setStorageCode,
 }) {
+  const { colors, storages } = product.options;
+
   return (
     <div className="flex flex-col sm:flex-row gap-4 mt-4">
-      <div>
-        <label className="block mb-1 text-sm">Color:</label>
-        <select
-          value={colorCode}
-          onChange={(e) => setColorCode(e.target.value)}
-          className="p-2 border rounded w-full"
-        >
-          {product.options.colors.map((c) => (
-            <option key={c.code} value={c.code}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <label className="block mb-1 text-sm">Almacenamiento:</label>
-        <select
-          value={storageCode}
-          onChange={(e) => setStorageCode(e.target.value)}
-          className="p-2 border rounded w-full"
-        >
-          {product.options.storages.map((s) => (
-            <option key={s.code} value={s.code}>
-              {s.name}
-            </option>
-          ))}
-        </select>
-      </div>
+      <SelectField
+        id="color-select"
+        label="Color:"
+        value={colorCode}
+        onChange={setColorCode}
+        options={colors}
+      />
+      <SelectField
+        id="storage-select"
+        label="Almacenamiento:"
+        value={storageCode}
+        onChange={setStorageCode}
+        options={storages}
+      />
     </div>
   );
 }

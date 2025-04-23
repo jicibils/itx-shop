@@ -1,32 +1,26 @@
 // src/components/ProductSpecs.jsx
 export default function ProductSpecs({ product }) {
+  const specs = [
+    { label: "CPU", value: product.cpu },
+    { label: "RAM", value: product.ram },
+    { label: "OS", value: product.os },
+    { label: "Resolución", value: product.displayResolution },
+    { label: "Batería", value: product.battery },
+    {
+      label: "Cámaras",
+      value: `${product.primaryCamera} / ${product.secondaryCamera}`,
+    },
+    { label: "Dimensiones", value: product.dimentions },
+    { label: "Peso", value: product.weight },
+  ];
+
   return (
-    <ul className="text-sm text-gray-700 grid grid-cols-2 gap-y-1">
-      <li>
-        <strong>CPU:</strong> {product.cpu}
-      </li>
-      <li>
-        <strong>RAM:</strong> {product.ram}
-      </li>
-      <li>
-        <strong>OS:</strong> {product.os}
-      </li>
-      <li>
-        <strong>Resolución:</strong> {product.displayResolution}
-      </li>
-      <li>
-        <strong>Batería:</strong> {product.battery}
-      </li>
-      <li>
-        <strong>Cámaras:</strong> {product.primaryCamera} /{" "}
-        {product.secondaryCamera}
-      </li>
-      <li>
-        <strong>Dimensiones:</strong> {product.dimentions}
-      </li>
-      <li>
-        <strong>Peso:</strong> {product.weight}
-      </li>
+    <ul className="text-sm text-gray-700 dark:text-gray-600 grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4">
+      {specs.map(({ label, value }) => (
+        <li key={label}>
+          <strong>{label}:</strong> {value}
+        </li>
+      ))}
     </ul>
   );
 }
