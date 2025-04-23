@@ -2,9 +2,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
 import App from "./App";
 import { CartProvider } from "./context/CartProvider";
+import CustomToaster from "./components/CustomToaster";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -12,8 +12,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <CartProvider>
         <App />
-        <Toaster />
+        <CustomToaster />
       </CartProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

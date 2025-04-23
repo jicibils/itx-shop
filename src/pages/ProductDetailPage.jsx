@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import confetti from "canvas-confetti";
 import ProductSpecs from "../components/ProductSpecs";
 import ProductSelectors from "../components/ProductSelectors";
 import BackLink from "../components/BackLink";
 import AddToCartButton from "../components/AddToCartButton";
+import Spinner from "../components/Spinner";
 import { getProductById, addToCart } from "../services/api";
 import { useCart } from "../hooks/useCart";
 
@@ -31,29 +33,36 @@ export default function ProductDetailPage() {
   const handleAddToCart = async () => {
     await addToCart({ id, colorCode, storageCode });
     setCartCount(cartCount + 1);
+    confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 } });
     toast.success("Producto añadido al carrito");
   };
 
-  if (loading || !product) return <p className="p-6">Cargando...</p>;
+  if (loading || !product) return <Spinner />;
 
   return (
-    <div className="p-6 space-y-4">
+    <div className="max-w-5xl mx-auto p-6 space-y-6 transition-colors duration-700">
       <BackLink>Volver al listado</BackLink>
 
-      <div className="flex flex-col lg:flex-row gap-8 mt-4">
-        <img
-          src={product.imgUrl}
-          alt={product.model}
-          className="w-full max-w-sm h-60 object-contain p-4 bg-white rounded shadow"
-        />
+      <div className="grid gap-10 md:grid-cols-2 items-start">
+        {/* Image */}
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md transition-colors duration-600">
+          <img
+            src={product.imgUrl}
+            alt={product.model}
+            className="w-full max-h-[400px] object-contain"
+          />
+        </div>
 
-        <div className="flex-1 space-y-4">
-          <h2 className="text-2xl font-bold">
-            {product.brand} - {product.model}
-          </h2>
-          <p className="text-xl text-indigo-600 font-semibold">
-            ${product.price}
-          </p>
+        {/* Info */}
+        <div className="flex flex-col gap-6 text-gray-800 dark:text-gray-100 transition-colors duration-600">
+          <div>
+            <h1 className="text-3xl font-bold leading-tight">
+              {product.brand} - {product.model}
+            </h1>
+            <p className="text-2xl text-indigo-600 font-semibold mt-2">
+              {product.price} €
+            </p>
+          </div>
 
           <ProductSpecs product={product} />
 
