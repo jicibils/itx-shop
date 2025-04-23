@@ -2,6 +2,8 @@ import js from "@eslint/js";
 import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
+import vitest from "eslint-plugin-vitest";
+import prettier from "eslint-config-prettier";
 
 export default [
   { ignores: ["dist"] },
@@ -19,6 +21,7 @@ export default [
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
+      vitest,
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -29,10 +32,24 @@ export default [
         { allowConstantExport: true },
       ],
     },
-    env: {
-      browser: true,
-      es2021: true,
-      vitest: true,
+  },
+  {
+    files: ["**/*.test.{js,jsx}"],
+    languageOptions: {
+      globals: {
+        describe: true,
+        it: true,
+        expect: true,
+        vi: true,
+        beforeEach: true,
+        afterEach: true,
+      },
+    },
+    plugins: { vitest },
+    rules: {
+      "vitest/no-disabled-tests": "warn",
+      "vitest/no-focused-tests": "error",
     },
   },
+  prettier,
 ];
