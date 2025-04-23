@@ -15,19 +15,19 @@ describe("ProductCard", () => {
     render(
       <BrowserRouter>
         <ProductCard product={product} />
-      </BrowserRouter>
+      </BrowserRouter>,
     );
 
     expect(screen.getByText(/Samsung/i)).toBeInTheDocument();
     expect(screen.getByText(/Galaxy S23/i)).toBeInTheDocument();
-    expect(screen.getByText(/\$999/)).toBeInTheDocument();
+    expect(screen.getByText("999 €")).toBeInTheDocument();
   });
 
   it("renders product image", () => {
     render(
       <BrowserRouter>
         <ProductCard product={product} />
-      </BrowserRouter>
+      </BrowserRouter>,
     );
 
     const img = screen.getByRole("img");

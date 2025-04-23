@@ -29,13 +29,15 @@ describe("ProductDetailPage", () => {
             <Route path="/product/:id" element={<ProductDetailPage />} />
           </Routes>
         </CartProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(
-      await screen.findByText("TestBrand - TestModel")
+      await screen.findByText("TestBrand - TestModel"),
     ).toBeInTheDocument();
     expect(screen.getByRole("img")).toHaveAttribute("src", "img.jpg");
-    expect(screen.getByText(/\$1000/)).toBeInTheDocument();
+    expect(
+      screen.getByText((_, el) => el.textContent === "1000 €"),
+    ).toBeInTheDocument();
   });
 });
