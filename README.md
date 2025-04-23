@@ -21,7 +21,7 @@ Mini-app desarrollada como parte del challenge técnico de ITX. Permite explorar
 - Testing con [Vitest](https://vitest.dev/) + [Testing Library](https://testing-library.com/)
 - Librerías extra: `lodash.debounce`, `canvas-confetti`, `react-hot-toast`, `@heroicons/react`
 
----
+## Version de Node: 20
 
 ## 📂 Estructura del proyecto
 
