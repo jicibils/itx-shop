@@ -1,6 +1,10 @@
 // src/pages/ProductDetailPage.jsx
-import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import ProductSpecs from "../components/ProductSpecs";
+import ProductSelectors from "../components/ProductSelectors";
+import BackLink from "../components/BackLink";
 import { getProductById, addToCart } from "../services/api";
 import { useCart } from "../hooks/useCart";
 
@@ -10,7 +14,7 @@ export default function ProductDetailPage() {
   const [colorCode, setColorCode] = useState("");
   const [storageCode, setStorageCode] = useState("");
   const [loading, setLoading] = useState(true);
-  const { cartCount, setCartCount } = useCart();
+  const { setCartCount, cartCount } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -25,113 +29,44 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = async () => {
     await addToCart({ id, colorCode, storageCode });
-
-    const newCount = cartCount + 1;
-    setCartCount(newCount);
-    alert(`Producto añadido al carrito. Total en carrito: ${newCount}`);
+    setCartCount(cartCount + 1);
+    toast.success("Producto añadido al carrito");
   };
 
-  if (loading || !product) return <p>Cargando...</p>;
+  if (loading || !product) return <p className="p-6">Cargando...</p>;
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <Link to="/">← Volver al listado</Link>
+    <div className="p-6 space-y-4">
+      <BackLink>Volver al listado</BackLink>
 
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "2rem",
-          marginTop: "2rem",
-          alignItems: "flex-start",
-        }}
-      >
+      <div className="flex flex-col lg:flex-row gap-8 mt-4">
         <img
           src={product.imgUrl}
           alt={product.model}
-          style={{
-            width: "300px",
-            height: "auto",
-            objectFit: "contain",
-            border: "1px solid #ddd",
-            padding: "1rem",
-            background: "#fff",
-            borderRadius: "8px",
-          }}
+          className="w-full max-w-sm h-60 object-contain p-4 bg-white rounded shadow"
         />
 
-        <div>
-          <h2>
+        <div className="flex-1 space-y-4">
+          <h2 className="text-2xl font-bold">
             {product.brand} - {product.model}
           </h2>
-          <p>
-            <strong>Precio:</strong> ${product.price}
-          </p>
-          <p>
-            <strong>CPU:</strong> {product.cpu}
-          </p>
-          <p>
-            <strong>RAM:</strong> {product.ram}
-          </p>
-          <p>
-            <strong>Sistema Operativo:</strong> {product.os}
-          </p>
-          <p>
-            <strong>Resolución:</strong> {product.displayResolution}
-          </p>
-          <p>
-            <strong>Batería:</strong> {product.battery}
-          </p>
-          <p>
-            <strong>Cámaras:</strong> {product.primaryCamera} /{" "}
-            {product.secondaryCamera}
-          </p>
-          <p>
-            <strong>Dimensiones:</strong> {product.dimentions}
-          </p>
-          <p>
-            <strong>Peso:</strong> {product.weight}
+          <p className="text-xl text-indigo-600 font-semibold">
+            ${product.price}
           </p>
 
-          <div style={{ marginTop: "1rem" }}>
-            <label>Color: </label>
-            <select
-              value={colorCode}
-              onChange={(e) => setColorCode(e.target.value)}
-            >
-              {product.options.colors.map((c) => (
-                <option key={c.code} value={c.code}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <ProductSpecs product={product} />
 
-          <div style={{ marginTop: "1rem" }}>
-            <label>Almacenamiento: </label>
-            <select
-              value={storageCode}
-              onChange={(e) => setStorageCode(e.target.value)}
-            >
-              {product.options.storages.map((s) => (
-                <option key={s.code} value={s.code}>
-                  {s.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <ProductSelectors
+            product={product}
+            colorCode={colorCode}
+            storageCode={storageCode}
+            setColorCode={setColorCode}
+            setStorageCode={setStorageCode}
+          />
 
           <button
             onClick={handleAddToCart}
-            style={{
-              marginTop: "1rem",
-              padding: "0.75rem 1.5rem",
-              backgroundColor: "#0070f3",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
+            className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded transition"
           >
             Añadir al carrito
           </button>

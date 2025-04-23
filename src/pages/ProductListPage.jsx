@@ -1,64 +1,46 @@
 // src/pages/ProductListPage.jsx
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
+import debounce from "lodash.debounce";
 import { useCachedProducts } from "../hooks/useCachedProducts";
-import { Link } from "react-router-dom";
+import ProductCard from "../components/ProductCard";
+import SearchInput from "../components/SearchInput";
 
 export default function ProductListPage() {
   const { products, loading } = useCachedProducts();
+  const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
+
+  const debouncedSetQuery = useMemo(
+    () => debounce((value) => setQuery(value), 300),
+    []
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedSetQuery.cancel();
+    };
+  }, [debouncedSetQuery]);
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+    debouncedSetQuery(value);
+  };
 
   const filtered = products.filter((p) =>
     `${p.brand} ${p.model}`.toLowerCase().includes(query.toLowerCase())
   );
 
-  if (loading) return <p>Cargando productos...</p>;
+  if (loading) return <p className="p-4">Cargando productos...</p>;
 
   return (
-    <div style={{ padding: "1rem" }}>
-      <input
-        type="text"
-        placeholder="Buscar por marca o modelo..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        style={{ marginBottom: "1rem", padding: "0.5rem", width: "100%" }}
-      />
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-            gap: "1rem",
-          }}
-        >
-          {filtered.map((p) => (
-            <Link
-              to={`/product/${p.id}`}
-              key={p.id}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <div
-                style={{
-                  border: "1px solid #ddd",
-                  borderRadius: "8px",
-                  padding: "1rem",
-                  textAlign: "center",
-                  boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
-                  background: "#fff",
-                  transition: "transform 0.2s",
-                }}
-              >
-                <img
-                  src={p.imgUrl}
-                  alt={p.model}
-                  style={{ width: "100%", height: "auto" }}
-                />
-                <h3>{p.brand}</h3>
-                <p>{p.model}</p>
-                <strong>${p.price}</strong>
-              </div>
-            </Link>
-          ))}
-        </div>
+    <div className="p-6">
+      <SearchInput value={search} onChange={handleSearchChange} />
+
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {filtered.map((p) => (
+          <ProductCard key={p.id} product={p} />
+        ))}
       </div>
     </div>
   );
