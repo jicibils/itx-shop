@@ -1,12 +1,132 @@
-# React + Vite
+# 📱 ITX Shop – Frontend Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Mini-app desarrollada como parte del challenge técnico de ITX. Permite explorar un catálogo de dispositivos móviles, ver sus detalles, seleccionar configuraciones y añadirlos a un carrito persistente.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Demo
 
-## Expanding the ESLint configuration
+📁 Repositorio: https://github.com/jicibils/itx-shop
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ⚙️ Tecnologías usadas
+
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [React Router DOM](https://reactrouter.com/)
+- [Axios](https://axios-http.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- Context API + localStorage para persistencia
+- Testing con [Vitest](https://vitest.dev/) + [Testing Library](https://testing-library.com/)
+- Librerías extra: `lodash.debounce`, `canvas-confetti`, `react-hot-toast`, `@heroicons/react`
+
+---
+
+## 📂 Estructura del proyecto
+
+```
+itx-shop/
+├── public/
+├── src/
+│   ├── assets/           # Imágenes, íconos
+│   ├── components/       # UI reutilizable (Header, Card, Selectors, etc.)
+│   ├── context/          # Carrito
+│   ├── hooks/            # Custom hooks (ej: useCachedProducts)
+│   ├── pages/            # PLP y PDP
+│   ├── services/         # API externa (Axios)
+│   ├── styles/           # Globales (Tailwind)
+│   ├── utils/            # Cache con expiración
+│   ├── App.jsx
+│   ├── main.jsx
+├── tests/                # Tests por componente y hook
+├── eslint.config.js
+├── tailwind.config.js
+├── vite.config.js
+├── README.md
+```
+
+---
+
+## 📦 Scripts disponibles
+
+```bash
+npm run dev      # Modo desarrollo
+npm run build    # Build de producción
+npm run lint     # Linter (ESLint + Tailwind)
+npm run test     # Ejecutar tests (Vitest)
+```
+
+---
+
+## ✅ Funcionalidades implementadas
+
+- [x] Catálogo de productos con búsqueda en tiempo real
+- [x] Página de detalle con selectores de color y almacenamiento
+- [x] Carrito global con contador animado y persistencia localStorage
+- [x] Skeleton loader + spinner
+- [x] Filtro optimizado con debounce
+- [x] Tema oscuro con toggle visual
+- [x] Toast de confirmación adaptado a dark mode
+- [x] Animación con confetti 🎉
+- [x] Breadcrumb de navegación
+- [x] Responsive design completo (mobile-first)
+- [x] Separación modular y arquitectura limpia
+- [x] Tests unitarios de componentes y hooks
+
+---
+
+## 🧠 Decisiones técnicas destacadas
+
+- ⚡ **Vite** por rendimiento y DX moderna.
+- 🛒 **Persistencia del carrito** usando Context + localStorage, como en un e-commerce real.
+- 🧹 **Cache con expiración** de 1 hora para productos (en `utils/cache.js`).
+- 🔎 **Debounce** aplicado a búsquedas para evitar renders innecesarios (incluso con cache).
+- 💬 **Toasts** visuales adaptados a modo oscuro con `react-hot-toast`.
+- 🧼 **Skeletons + loaders** para mantener la UI fluida mientras se cargan los datos.
+- 🌗 **Dark mode** totalmente integrado, con transiciones suaves (`transition-colors`).
+- 🎨 **Tailwind CSS** para estilado modular, claro y rápido de extender.
+- 🧪 **Tests** en componentes clave (`CartContext`, `SearchInput`, `ProductDetailPage`, `hooks`, etc.).
+- ♻️ Separación de lógica, componentes y vistas para facilitar escalabilidad.
+
+---
+
+## 📡 API utilizada
+
+Dominio: `https://itx-frontend-test.onrender.com`
+
+- `GET /api/product` → listado de productos
+- `GET /api/product/:id` → detalle por ID
+- `POST /api/cart` → agregar producto
+
+---
+
+## 🧪 Tests incluidos
+
+- ✅ Componente `SearchInput`
+- ✅ Página `ProductDetailPage`
+- ✅ Componente `ProductCard`
+- ✅ Componente `CartContext` con persistencia
+- ✅ Hook `useCachedProducts`
+- ✅ Utilidad de `cache`
+
+---
+
+## ✍️ Autor
+
+👨‍💻 [Juan Ignacio Cibils](https://github.com/jicibils)  
+🇦🇷 Desarrollador Fullstack – React, Node.js, AWS  
+🧠 Enfocado en producto, performance y experiencia de usuario
+
+---
+
+## 🎁 Bonus
+
+- Animación al agregar al carrito (icono + confetti)
+- Skeleton loader y spinner según el tipo de vista
+- Visual refinado en mobile y desktop con Tailwind
+- Proyecto modular, mantenible y escalable
+
+---
+
+¡Gracias por revisar este proyecto! 🚀
