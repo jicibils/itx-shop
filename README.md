@@ -112,6 +112,52 @@ Dominio: `https://itx-frontend-test.onrender.com`
 
 ---
 
+---
+
+## ⚙️ Requisitos previos
+
+- Node.js 18+ recomendado
+- npm 9+ (o yarn/pnpm si preferís)
+- Clonar el repositorio
+
+---
+
+## 🛠️ Cómo ejecutar el proyecto
+
+```bash
+# 1. Instalar dependencias
+npm install
+
+# 2. Correr en modo desarrollo (http://localhost:5173)
+npm run dev
+
+# 3. Ejecutar tests
+npm run test
+
+# 4. Verificar el linting
+npm run lint
+```
+
+---
+
+## ✅ Notas técnicas
+
+- Utiliza **Vite** como bundler moderno (inicio ultra rápido ⚡).
+- Estilos con **Tailwind CSS** (responsive + dark mode).
+- ESLint + Prettier para mantener el código limpio y consistente.
+- Datos de productos obtenidos desde: `https://itx-frontend-test.onrender.com`.
+- La app se ejecuta en `http://localhost:5173` por defecto.
+
+---
+
+## 🧠 Troubleshooting
+
+- Si `tailwindcss` no responde: asegurate de haber corrido `npm install` y de no tener conflictos con versiones de Node.
+- Si no levanta el server: verificar que estás usando una versión compatible de Node (ej: `nvm use 18`).
+- Si los tests fallan por `describe`, `it`, etc.: asegurate de tener `vitest` correctamente configurado en el entorno y que esté en el `devDependencies`.
+
+---
+
 ## ✍️ Autor
 
 👨‍💻 [Juan Ignacio Cibils](https://github.com/jicibils)  
